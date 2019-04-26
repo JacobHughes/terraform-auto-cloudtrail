@@ -6,9 +6,10 @@ This project is a few simple terraform scripts to set up CloudTrail in an AWS ac
 
 0. Clone this repo
 1. Install Terraform locally - see https://learn.hashicorp.com/terraform/getting-started/install.html
-2. Make sure your credentials for the account used by TerraForm is configured correctly in `.aws/credentials` - see https://www.terraform.io/docs/providers/aws/
-    * Change the profile used by Terraform if necessary, on line 3 of `config.tf` 
+2. Make sure your credentials for the account used by TerraForm is configured correctly in `~/.aws/credentials` - see https://www.terraform.io/docs/providers/aws/
+    * Change the profile used by Terraform to be the name of your profile in `~/.aws/credentials`, on line 3 of `config.tf` 
 3. In the file `config.tf`, configure Terraform to use remote state & state locking using AWS components - see https://www.terraform.io/docs/backends/types/s3.html
+    * You'll need to manually set up your Terraform S3 remote state bucket and DynamoDB lock table, but the details are in the above linked documentation 
 5. Change the S3 bucket names to something unique, lines 3 & 8 of storage.tf
 
 ## Getting Started
