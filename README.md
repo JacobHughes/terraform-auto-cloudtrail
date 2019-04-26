@@ -5,6 +5,9 @@ This project is a few simple terraform scripts to set up CloudTrail in an AWS ac
 ## Prerequisites
 
 0. Clone this repo
+1. Make sure your AWS CLI is set up and configured with the correct profile
+    * The docs are available from Amazon - https://aws.amazon.com/cli/
+    * Your profile should be stored in `~/.aws/credentials` for easiest interaction with the code in this repo, alternatively you can use environment variables to specify your AWS access information.
 1. Install Terraform locally - see https://learn.hashicorp.com/terraform/getting-started/install.html
 2. Make sure your credentials for the account used by TerraForm is configured correctly in `~/.aws/credentials` - see https://www.terraform.io/docs/providers/aws/
     * Change the profile used by Terraform to be the name of your profile in `~/.aws/credentials`, on line 3 of `config.tf` 
@@ -14,13 +17,13 @@ This project is a few simple terraform scripts to set up CloudTrail in an AWS ac
 
 ## Getting Started
 
-From the root folder, simply run `./scripts/deploy.sh` to plan and deploy the AWS components. This will add 2x S3 buckets for log storage, an AWS Glue crawler, and a saved AWS Athena query. Additionally it will create an IAM role for the crawler.
+From the root folder, simply run `./scripts/deploy.sh` to plan and deploy the AWS components. This will add 2x S3 buckets for log storage, an AWS Glue crawler, and a saved AWS Athena query. Additionally the configuration will create an IAM role for the crawler.
 
 After executing the deploy script, the resources will be visible in the AWS Console. Browse to the Glue Console to run the crawler, which will generate the schema used by Athena in the example query, to investigate your logs. 
 
 ## Teardown
 
-From the root folder, simply run `./.cicd/teardown.sh` to remove all the components created by this project.
+From the root folder, simply run `./scripts/teardown.sh` to remove all the components created by this project.
 
 ## To do
 * Make sure that the IAM policies are configured with the best practices for tight access control
