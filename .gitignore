@@ -5,6 +5,7 @@
 
 
 # Terraform stuff
+# The deploy script saves the plan file as "tf.plan"
 *.plan
 *.tfvar*
 *.tfstate
