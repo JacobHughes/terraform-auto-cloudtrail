@@ -2,7 +2,7 @@
  * CloudTrail resource for monitoring all services
  */
 resource "aws_cloudtrail" "master_cloudtrail" {
-  name                          = "master-cloudtrail"
+  name                          = "master-cloudtrail-${var.env}"
   s3_bucket_name                = "${aws_s3_bucket.master-cloudtrail-bucket.id}"
   s3_key_prefix                 = "cloudtrail"
   include_global_service_events = true
@@ -20,7 +20,7 @@ resource "aws_cloudtrail" "master_cloudtrail" {
  */
 resource "aws_glue_crawler" "example" {
   database_name = "${aws_glue_catalog_database.cloudtrail_glue_crawler_db.name}"
-  name          = "cloudtrail-log-crawler"
+  name          = "cloudtrail-log-crawler-${var.env}"
   role          = "${aws_iam_role.glue-crawler-read-logs-role.arn}"
 
   s3_target {
@@ -32,7 +32,7 @@ resource "aws_glue_crawler" "example" {
  * Example query for investigating CloudTrail logs
  */
 resource "aws_athena_named_query" "example-query" {
-  name        = "athena-example-query"
+  name        = "athena-example-query-${var.env}"
   database    = "${aws_glue_catalog_database.cloudtrail_glue_crawler_db.name}"
   query       = "SELECT COUNT(DISTINCT awsaccountid) FROM cloudtrail_digest;"
   description = "A simple query example to count the number of distinct AWS accounts in the CloudTrail logs"

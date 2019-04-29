@@ -3,7 +3,7 @@
  * S3 bucket and permissions associated with AWS Glue
  */
 resource "aws_iam_role" "glue-crawler-read-logs-role" {
-  name = "glue-crawler-read-logs-role"
+  name = "glue-crawler-read-logs-role-${var.env}"
 
   assume_role_policy = <<POLICY
 {
@@ -33,7 +33,7 @@ data "aws_iam_policy" "AWSGlueServiceRole" {
  * IAM policy allowing object retreival on the CloudTrail logs
  */
 resource "aws_iam_policy" "read-s3-bucket-policy" {
-  name        = "read-s3-bucket-policy"
+  name        = "read-s3-bucket-policy-${var.env}"
   description = "AWS IAM policy allowing the reading of s3 bucket"
 
   policy = <<POLICY
@@ -58,7 +58,7 @@ POLICY
  * Attaching the "read-s3-bucket-policy" to the glue crawler role
  */
 resource "aws_iam_policy_attachment" "attach-read-s3-policy" {
-  name       = "attach-read-s3-policy"
+  name       = "attach-read-s3-policy-${var.env}"
   roles      = ["${aws_iam_role.glue-crawler-read-logs-role.name}"]
   policy_arn = "${aws_iam_policy.read-s3-bucket-policy.arn}"
 }
@@ -67,7 +67,7 @@ resource "aws_iam_policy_attachment" "attach-read-s3-policy" {
  * Attaching the "AWSGlueServiceRole" to the glue crawler role
  */
 resource "aws_iam_policy_attachment" "attach-glue-service-role" {
-  name       = "attach-glue-service-role"
+  name       = "attach-glue-service-role-${var.env}"
   roles      = ["${aws_iam_role.glue-crawler-read-logs-role.name}"]
   policy_arn = "${data.aws_iam_policy.AWSGlueServiceRole.arn}"
 }
